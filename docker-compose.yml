@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:13
@@ -6,9 +8,11 @@ services:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: nestapi
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Bu port Render tarafından otomatik yönetilecek
     volumes:
       - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
   app:
     build: .
@@ -20,10 +24,17 @@ services:
       DB_DATABASE: nestapi
       ACCESS_TOKEN_SECRET_KEY: qwelkjr12314qwlşdop2312312
       ACCESS_TOKEN_EXPIRE_TIME: 30m
+      PORT: 3000  # Render, PORT ortam değişkeniyle dinamik portu atar
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Render'da otomatik olarak yönlendirilecektir
     depends_on:
       - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   db-data:
