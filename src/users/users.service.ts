@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { UserSignUpDto } from './dto/user-signup.dto';
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from 'bcryptjs';
 import { UserSignInDto } from './dto/user-signin.dto';
 import { sign } from 'jsonwebtoken';
 
